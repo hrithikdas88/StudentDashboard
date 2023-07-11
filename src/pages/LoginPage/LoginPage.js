@@ -14,7 +14,7 @@ const LoginPage = () => {
           onSuccess={(credentialResponse) => {
             var decoded = jwt_decode(credentialResponse.credential);
             console.log(decoded);
-            navigate("/dashboard");
+            navigate("/dashboard", { state: { decoded, profilePhoto: decoded.picture } });
           }}
           onError={() => {
             console.log("Login Failed");

@@ -7,6 +7,7 @@ import { BsFileEarmarkPlus,BsX } from "react-icons/bs";
 
 
 
+
 const UserList = () => {
   const students = useSelector((state) => state.students.data);
 
@@ -71,7 +72,7 @@ const UserList = () => {
             </div>
           ))}
           <div>
-            <button onClick={() => setPopupOpen(true)}>
+            <button className="Button1" onClick={() => setPopupOpen(true)}>
               {" "}
               <BsFileEarmarkPlus />{" "}
             </button>

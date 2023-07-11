@@ -2,20 +2,36 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.scss'
-
+import { useLocation } from 'react-router-dom';
 const Sidebar = () => {
     const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
+
+  const location = useLocation();
+  //const decodedData = location.state;
   const navigate = useNavigate();
+  const { decoded, profilePhoto } = location.state;
+
   return (
     <div className="sidebar">
     <div className="logo">
-      <div className="logo-icon">UI</div>
+      {/* <div className="logo-icon">UI</div> */}
       <div className="logo-text">
-        <p className="text-white">Untitled UI</p>
-        <p className="text-sm text-slate-200">info@untitled.com</p>
+        
+        
+      {decoded && (
+        <div>
+          <p className="text-white"> {decoded.name}</p>
+          <p className="text-sm text-slate-200"> {decoded.email}</p>
+          {profilePhoto && <img className='logo-icon' src={profilePhoto} alt="Profile" />}
+          {/* Display other details from the decoded data */}
+        </div>
+      )}
+        
+        {/* <p className="text-white">Untitled UI</p>
+        <p className="text-sm text-slate-200">info@untitled.com</p> */}
       </div>
     </div>
     <ul className="sidebar-menu">
