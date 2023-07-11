@@ -6,6 +6,9 @@ export const fetchStudents = createAsyncThunk('students/fetchStudents', async ()
   return data;
 });
 
+export const generateUniqueId = () => {
+    return Math.random().toString(36).substr(2, 9);
+  };
 
 const studentSlice = createSlice({
   name: 'students',
@@ -14,7 +17,20 @@ const studentSlice = createSlice({
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addStudent: (state, action) => {
+      const newStudent = {
+        id: generateUniqueId(), // Generate a unique ID
+        ...action.payload,
+      };
+      state.data.push(newStudent);
+    },
+    deleteStudent: (state, action) => {
+      const studentId = action.payload;
+      state.data = state.data.filter((student) => student.id !== studentId);
+      
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchStudents.pending, (state) => {
@@ -31,6 +47,7 @@ const studentSlice = createSlice({
   },
 });
 
-// Export the async thunk and the reducer
+
 export const { reducer } = studentSlice;
+export const {  deleteStudent ,addStudent} = studentSlice.actions;
 export default studentSlice.reducer;

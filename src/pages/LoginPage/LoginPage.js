@@ -8,7 +8,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
   return (
     <div className="login-page">
-        <h1>Welcome</h1>
+        <h1>Dashboard</h1>
       <GoogleOAuthProvider clientId="416779874033-47c756r5e7g9lpp5dkf3rp7mvifectah.apps.googleusercontent.com">
         <GoogleLogin
           onSuccess={(credentialResponse) => {
