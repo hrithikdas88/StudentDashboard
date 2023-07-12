@@ -2,6 +2,7 @@ import React from "react";
 import { BsX } from "react-icons/bs";
 import { BsFileEarmarkPlus} from "react-icons/bs";
 import AddStudentForm from "../AddStudentForm/AddStudentForm";
+import "./AddStudentPopup"
 
 const AddStudentPopup = ({
   isPopupOpen,
@@ -20,7 +21,7 @@ const AddStudentPopup = ({
         <div className="popup">
           <div className="popup-content">
             <button className="close-button" onClick={handleClosePopup}>
-              <BsX size={30} />
+              <BsX  size={30}/>
             </button>
             <AddStudentForm
               newStudent={newStudent}

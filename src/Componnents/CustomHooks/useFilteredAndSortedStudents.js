@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { addStudent, deleteStudent } from '../../store/studentSlice';
-import { generateUniqueId } from '../../store/studentSlice';
-import { useDispatch } from 'react-redux';
+import { useState } from "react";
+import { addStudent, deleteStudent } from "../../store/studentSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-
-const useFilteredAndSortedStudents = (students) => {
+const useFilteredAndSortedStudents = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const students = useSelector((state) => state.students.data);
   const filteredStudents = students.filter((student) =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -39,20 +40,17 @@ const useFilteredAndSortedStudents = (students) => {
 
   const handleAddStudent = () => {
     const studentData = {
-      id: generateUniqueId(), 
       name: newStudent.name,
       dateOfBirth: newStudent.dateOfBirth,
     };
     dispatch(addStudent(studentData));
     setNewStudent({ name: "", dateOfBirth: "" });
-    setPopupOpen(false)
+    setPopupOpen(false);
   };
-
 
   const handleDeleteStudent = (studentId) => {
     dispatch(deleteStudent(studentId));
   };
-
 
   const handleClosePopup = () => {
     setPopupOpen(false);
@@ -61,7 +59,7 @@ const useFilteredAndSortedStudents = (students) => {
   return {
     searchTerm,
     setSearchTerm,
-    sortOrder, 
+    sortOrder,
     sortedStudents,
     handleSortOrderChange,
     handleAddStudent,
@@ -70,9 +68,8 @@ const useFilteredAndSortedStudents = (students) => {
     setNewStudent,
     setPopupOpen,
     handleDeleteStudent,
-    handleClosePopup
+    handleClosePopup,
   };
 };
 
 export default useFilteredAndSortedStudents;
-

@@ -1,6 +1,5 @@
 import React from "react";
 import useFilteredAndSortedStudents from "../../Componnents/CustomHooks/useFilteredAndSortedStudents";
-import { useSelector } from "react-redux";
 import "./UserList.scss";
 import SearchBar from "../../Componnents/Search/SearchBar";
 import SortSelect from "../../Componnents/Sort/SortSelect";
@@ -8,8 +7,6 @@ import AddStudentPopup from "../../Componnents/AddStudentPopup/AddStudentPopup";
 import StudentCard from "../../Componnents/StudentCard/StudentCard";
 
 const UserList = () => {
-  const students = useSelector((state) => state.students.data);
-
   const {
     searchTerm,
     setSearchTerm,
@@ -22,9 +19,8 @@ const UserList = () => {
     setNewStudent,
     setPopupOpen,
     handleDeleteStudent,
-    handleClosePopup
-  } = useFilteredAndSortedStudents(students);
-
+    handleClosePopup,
+  } = useFilteredAndSortedStudents();
 
   return (
     <div>
@@ -48,16 +44,16 @@ const UserList = () => {
               handleDeleteStudent={handleDeleteStudent}
             />
           ))}
-          <div>
-            <AddStudentPopup
-              isPopupOpen={isPopupOpen}
-              setPopupOpen={setPopupOpen}
-              newStudent={newStudent}
-              setNewStudent={setNewStudent}
-              handleAddStudent={handleAddStudent}
-              handleClosePopup={handleClosePopup}
-            />
-          </div>
+        </div>
+        <div>
+          <AddStudentPopup
+            isPopupOpen={isPopupOpen}
+            setPopupOpen={setPopupOpen}
+            newStudent={newStudent}
+            setNewStudent={setNewStudent}
+            handleAddStudent={handleAddStudent}
+            handleClosePopup={handleClosePopup}
+          />
         </div>
       </div>
     </div>
