@@ -20,7 +20,7 @@ const studentSlice = createSlice({
   reducers: {
     addStudent: (state, action) => {
       const newStudent = {
-        id: generateUniqueId(), // Generate a unique ID
+        id: generateUniqueId(), 
         ...action.payload,
       };
       state.data.push(newStudent);

@@ -1,12 +1,11 @@
 import React from "react";
 import useFilteredAndSortedStudents from "../../Componnents/CustomHooks/useFilteredAndSortedStudents";
 import { useSelector } from "react-redux";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import "./UserList.scss";
-import { BsFileEarmarkPlus,BsX } from "react-icons/bs";
-
-
-
+import SearchBar from "../../Componnents/Search/SearchBar";
+import SortSelect from "../../Componnents/Sort/SortSelect";
+import AddStudentPopup from "../../Componnents/AddStudentPopup/AddStudentPopup";
+import StudentCard from "../../Componnents/StudentCard/StudentCard";
 
 const UserList = () => {
   const students = useSelector((state) => state.students.data);
@@ -23,93 +22,41 @@ const UserList = () => {
     setNewStudent,
     setPopupOpen,
     handleDeleteStudent,
+    handleClosePopup
   } = useFilteredAndSortedStudents(students);
 
-
-  const handleClosePopup = () => {
-    
-    setPopupOpen(false);
-  };
 
   return (
     <div>
       <div className="content">
-        <h2 className="page-title"> Dashboard</h2>
+        <h2 className="page-title">Dashboard</h2>
 
         <div className="sort-container">
-          <div className="sort-select-wrapper">
-            <select
-              id="sort-order"
-              value={sortOrder}
-              onChange={handleSortOrderChange}
-              className="sort-select"
-            >
-              <option>Sort</option>
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
-            </select>
-          </div>
+          <SortSelect
+            sortOrder={sortOrder}
+            handleSortOrderChange={handleSortOrderChange}
+          />
         </div>
 
-        <input
-          type="text"
-          placeholder="Search by student name"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         <div className="student-list">
           {sortedStudents.map((student) => (
-            <div key={student.id} className="card">
-              <h3>{student.name}</h3>
-              <p>DoB: {student.dateOfBirth}</p>
-              <button
-                className="delete-button"
-                onClick={() => handleDeleteStudent(student.id)}
-              >
-                <RiDeleteBin6Line />
-              </button>
-            </div>
+            <StudentCard
+              key={student.id}
+              student={student}
+              handleDeleteStudent={handleDeleteStudent}
+            />
           ))}
           <div>
-            <button className="Button1" onClick={() => setPopupOpen(true)}>
-              {" "}
-              <BsFileEarmarkPlus />{" "}
-            </button>
-            {isPopupOpen && (
-              <div className="popup">
-                <div className="popup-content">
-                <button className="close-button" onClick={handleClosePopup}>
-              <BsX  size={30}/>
-            </button>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={newStudent.name}
-                    onChange={(e) =>
-                      setNewStudent({ ...newStudent, name: e.target.value })
-                    }
-                  />
-                  <input
-                    type="date"
-                    placeholder="Date of Birth"
-                    value={newStudent.dateOfBirth}
-                    onChange={(e) =>
-                      setNewStudent({
-                        ...newStudent,
-                        dateOfBirth: e.target.value,
-                      })
-                    }
-                  />
-                  <button
-                    onClick={handleAddStudent}
-                    disabled={!newStudent.name || !newStudent.dateOfBirth}
-                  >
-                    Add Student
-                  </button>
-                </div>
-              </div>
-            )}
+            <AddStudentPopup
+              isPopupOpen={isPopupOpen}
+              setPopupOpen={setPopupOpen}
+              newStudent={newStudent}
+              setNewStudent={setNewStudent}
+              handleAddStudent={handleAddStudent}
+              handleClosePopup={handleClosePopup}
+            />
           </div>
         </div>
       </div>

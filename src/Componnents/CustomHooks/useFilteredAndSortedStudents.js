@@ -53,6 +53,11 @@ const useFilteredAndSortedStudents = (students) => {
     dispatch(deleteStudent(studentId));
   };
 
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
+
   return {
     searchTerm,
     setSearchTerm,
@@ -64,7 +69,8 @@ const useFilteredAndSortedStudents = (students) => {
     newStudent,
     setNewStudent,
     setPopupOpen,
-    handleDeleteStudent
+    handleDeleteStudent,
+    handleClosePopup
   };
 };
 

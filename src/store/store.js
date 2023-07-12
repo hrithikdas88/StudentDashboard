@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
-import studentReducer ,{fetchStudents} from './studentSlice'
+
+import studentReducer  from './studentSlice'
 
 const store = configureStore({
     reducer: {

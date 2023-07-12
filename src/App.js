@@ -13,6 +13,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}>
           <Route path='' element={<UserList/>}></Route>
           <Route path='add' element={<AddStudent/>}></Route>
+         
         </Route>
       
 
