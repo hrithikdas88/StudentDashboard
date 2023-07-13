@@ -12,7 +12,8 @@ const Sidebar = () => {
   const location = useLocation();
 
   const navigate = useNavigate();
-  const { decoded, profilePhoto } = location.state  || {};
+  const { decoded, profilePhoto } = location.state  ?? {};
+
 
   return (
     <div className="sidebar">

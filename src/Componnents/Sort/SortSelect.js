@@ -9,7 +9,7 @@ const SortSelect = ({ sortOrder, handleSortOrderChange }) => {
         onChange={handleSortOrderChange}
         className="sort-select"
       >
-        <option>Sort</option>
+        <option value="">sort</option>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
       </select>

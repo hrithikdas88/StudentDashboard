@@ -1,14 +1,24 @@
 import { useState } from "react";
-import { addStudent, deleteStudent } from "../../store/studentSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addStudent, deleteStudent, updateStudent } from "../../store/studentSlice";
 
 const useFilteredAndSortedStudents = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("");
-  const dispatch = useDispatch();
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [newStudent, setNewStudent] = useState({
+    name: "",
+    dateOfBirth: "",
+  });
+  const [editedStudent, setEditedStudent] = useState({
+    name: "",
+    dateOfBirth: "",
+  });
+  const [isEditing, setIsEditing] = useState(false);
 
+  const dispatch = useDispatch();
   const students = useSelector((state) => state.students.data);
+
   const filteredStudents = students.filter((student) =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -31,13 +41,6 @@ const useFilteredAndSortedStudents = () => {
     setSortOrder(event.target.value);
   };
 
-  const [isPopupOpen, setPopupOpen] = useState(false);
-
-  const [newStudent, setNewStudent] = useState({
-    name: "",
-    dateOfBirth: "",
-  });
-
   const handleAddStudent = () => {
     const studentData = {
       name: newStudent.name,
@@ -50,6 +53,30 @@ const useFilteredAndSortedStudents = () => {
 
   const handleDeleteStudent = (studentId) => {
     dispatch(deleteStudent(studentId));
+  };
+
+  const handleEditClick = (student) => {
+    setIsEditing(true);
+    setEditedStudent({ name: student.name, dateOfBirth: student.dateOfBirth });
+  };
+
+  const handleEditInputChange = (event) => {
+    const { name, value } = event.target;
+    setEditedStudent((prevStudent) => ({
+      ...prevStudent,
+      [name]: value,
+    }));
+  };
+
+  const handleEditSubmit = (studentId) => {
+    dispatch(
+      updateStudent({ studentId, updatedData: editedStudent })
+    );
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
   };
 
   const handleClosePopup = () => {
@@ -68,7 +95,13 @@ const useFilteredAndSortedStudents = () => {
     setNewStudent,
     setPopupOpen,
     handleDeleteStudent,
+    handleEditClick,
+    handleEditInputChange,
+    handleEditSubmit,
+    handleCancelEdit,
     handleClosePopup,
+    editedStudent,
+    isEditing,
   };
 };
 

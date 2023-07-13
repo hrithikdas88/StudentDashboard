@@ -34,6 +34,23 @@ export const addStudent = createAsyncThunk(
   }
 );
 
+
+export const updateStudent = createAsyncThunk(
+  "students/updateStudent",
+  async ({ studentId, updatedData }) => {
+    const response = await fetch(`http://localhost:8000/students/${studentId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+    const data = await response.json();
+    return data;
+  }
+);
+
+
 const studentSlice = createSlice({
   name: "students",
   initialState: {
@@ -76,6 +93,19 @@ const studentSlice = createSlice({
         state.data.push(action.payload);
       })
       .addCase(addStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(updateStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const updatedIndex = state.data.findIndex(
+          (student) => student.id === action.payload.id
+        );
+        if (updatedIndex !== -1) {
+          state.data[updatedIndex] = action.payload;
+        }
+      })
+      .addCase(updateStudent.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
