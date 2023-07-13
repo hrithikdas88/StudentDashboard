@@ -10,8 +10,11 @@ const AddStudentPopup = ({
   newStudent,
   setNewStudent,
   handleAddStudent,
-  handleClosePopup,
+  
 }) => {
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
   return (
     <>
       <button className="Button1" onClick={() => setPopupOpen(true)}>
@@ -20,7 +23,7 @@ const AddStudentPopup = ({
       {isPopupOpen && (
         <div className="popup">
           <div className="popup-content">
-            <button className="close-button" onClick={handleClosePopup}>
+            <button className="close-button" onClick={handleClosePopup} >
               <BsX  size={30}/>
             </button>
             <AddStudentForm

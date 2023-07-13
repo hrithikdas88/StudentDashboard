@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiDeleteBin6Line, RiEditFill } from "react-icons/ri";
 import useFilteredAndSortedStudents from "../CustomHooks/useFilteredAndSortedStudents";
 import EditableFields from "../EditableFields/EditableFields";
@@ -16,7 +16,7 @@ const StudentCard = ({ student }) => {
   } = useFilteredAndSortedStudents();
 
   return (
-    <div key={student.id} className="card">
+    <div className="card">
       {isEditing ? (
         <EditableFields
           editedStudent={editedStudent}
@@ -28,10 +28,16 @@ const StudentCard = ({ student }) => {
         <>
           <h3>{student.name}</h3>
           <p>DoB: {student.dateOfBirth}</p>
-          <button className="edit-button" onClick={() => handleEditClick(student)}>
+          <button
+            className="edit-button"
+            onClick={() => handleEditClick(student)}
+          >
             <RiEditFill />
           </button>
-          <button className="delete-button" onClick={() => handleDeleteStudent(student.id)}>
+          <button
+            className="delete-button"
+            onClick={() => handleDeleteStudent(student.id)}
+          >
             <RiDeleteBin6Line />
           </button>
         </>
@@ -41,4 +47,3 @@ const StudentCard = ({ student }) => {
 };
 
 export default StudentCard;
-

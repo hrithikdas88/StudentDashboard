@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import useFilteredAndSortedStudents from "../../Componnents/CustomHooks/useFilteredAndSortedStudents";
 import "./UserList.scss";
 import SearchBar from "../../Componnents/Search/SearchBar";
 import SortSelect from "../../Componnents/Sort/SortSelect";
 import AddStudentPopup from "../../Componnents/AddStudentPopup/AddStudentPopup";
 import StudentCard from "../../Componnents/StudentCard/StudentCard";
-
+import Pagination from "../../Componnents/Pagination/Pagination";
+import usePagination from "../../Componnents/CustomHooks/usePagination";
 const UserList = () => {
   const {
     searchTerm,
@@ -19,10 +20,22 @@ const UserList = () => {
     setNewStudent,
     setPopupOpen,
     handleDeleteStudent,
-    handleClosePopup,
-   
-
+    
+    
   } = useFilteredAndSortedStudents();
+
+  const itemsPerPage = 20;
+  const totalItems = sortedStudents.length;
+
+  const { currentPage, totalPages, handlePageChange } = usePagination(totalItems, itemsPerPage);
+
+  const displayedStudents = sortedStudents.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+
+  
 
   return (
     <div>
@@ -39,14 +52,18 @@ const UserList = () => {
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         <div className="student-list">
-          {sortedStudents.map((student) => (
+          {displayedStudents.map((student) => (
             <StudentCard
               key={student.id}
               student={student}
-              handleDeleteStudent={handleDeleteStudent}
+             handleDeleteStudent={handleDeleteStudent}
+            
             />
           ))}
         </div>
+
+       
+
         <div>
           <AddStudentPopup
             isPopupOpen={isPopupOpen}
@@ -54,12 +71,18 @@ const UserList = () => {
             newStudent={newStudent}
             setNewStudent={setNewStudent}
             handleAddStudent={handleAddStudent}
-            handleClosePopup={handleClosePopup}
           />
         </div>
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
 };
 
 export default UserList;
+

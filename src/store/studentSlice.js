@@ -72,30 +72,19 @@ const studentSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(deleteStudent.pending, (state) => {
-        state.status = "loading";
-      })
+     
       .addCase(deleteStudent.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = state.data.filter(
           (student) => student.id !== action.payload
         );
       })
-      .addCase(deleteStudent.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(addStudent.pending, (state) => {
-        state.status = "loading";
-      })
+     
       .addCase(addStudent.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data.push(action.payload);
       })
-      .addCase(addStudent.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
+     
       .addCase(updateStudent.fulfilled, (state, action) => {
         state.status = "succeeded";
         const updatedIndex = state.data.findIndex(
@@ -105,10 +94,7 @@ const studentSlice = createSlice({
           state.data[updatedIndex] = action.payload;
         }
       })
-      .addCase(updateStudent.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+     
   },
 });
 

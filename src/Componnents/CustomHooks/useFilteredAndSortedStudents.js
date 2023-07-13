@@ -23,6 +23,8 @@ const useFilteredAndSortedStudents = () => {
     student.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  
+
   const sortedStudents = [...filteredStudents];
   if (sortOrder !== "") {
     sortedStudents.sort((a, b) => {
@@ -53,6 +55,8 @@ const useFilteredAndSortedStudents = () => {
 
   const handleDeleteStudent = (studentId) => {
     dispatch(deleteStudent(studentId));
+    
+   
   };
 
   const handleEditClick = (student) => {
@@ -82,6 +86,11 @@ const useFilteredAndSortedStudents = () => {
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
+
+  
+
+
+  
 
   return {
     searchTerm,
